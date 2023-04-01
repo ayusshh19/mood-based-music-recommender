@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import cardimg from "../logo.png";
 import songimg from '../assets/songs.jpeg'
-export default function Maincard() {
+export default function Maincard(props) {
+  // console.log(props)
   return (
-    <Cards>
-      <img src={songimg} alt="" srcset="" />
+    <Cards onClick={()=>props.setid(props.data.id)}>
+      <img src={props.data.album.images[0].url} alt="" srcset="" />
     </Cards>
   );
 }
