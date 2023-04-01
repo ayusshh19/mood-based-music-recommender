@@ -3,13 +3,15 @@ import styled from "styled-components";
 import { MdHomeFilled, MdSearch } from "react-icons/md";
 import { IoLibrary } from "react-icons/io5";
 import Playlists from "./Playlists";
-import logo from '../logo.png'
+import logo from "../logo.png";
 export default function Sidebar() {
   return (
     <Container>
       <div className="top__links">
         <div className="logo">
-          <h2><img src={logo} alt="" srcset="" /> Suno Jorse</h2>
+          <h2>
+            <img src={logo} alt="" srcset="" /> Suno Jorse
+          </h2>
         </div>
         <ul>
           <li>
@@ -32,17 +34,17 @@ export default function Sidebar() {
 }
 
 const Container = styled.div`
-      background-color: #002b5b;
-.logo h2{
-  font-size: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.logo h2 img{
-  width: 2rem;
-  height: 2rem;
-}
+  background-color: #002b5b;
+  .logo h2 {
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo h2 img {
+    width: 2rem;
+    height: 2rem;
+  }
   color: #b3b3b3;
   display: flex;
   flex-direction: column;
