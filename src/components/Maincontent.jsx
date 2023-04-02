@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import currentlogo from "../assets/songs.jpeg";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import { useContext } from "react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -15,17 +15,21 @@ import "swiper/css/scrollbar";
 // Import Swiper styles
 import "swiper/css";
 import Maincard from "./Maincard";
+import { UserContext } from "../App";
 export default function Maincontent() {
+  const { trackdata, settrackdata, playlistdata, setplaylistdata } =
+    useContext(UserContext);
   const [getalldetails, setgetalldetails] = useState([]);
   const [mainheader, setmainheader] = useState([]);
   const [playid, setplayid] = useState();
   useEffect(() => {
-    console.log(playid)
+    console.log(playid);
     const filterdata = getalldetails.filter((data) => {
       return data.id === playid;
     });
     console.log(filterdata);
     setmainheader(filterdata);
+    setplaylistdata(filterdata)
   }, [playid]);
   useEffect(() => {
     axios
@@ -47,7 +51,18 @@ export default function Maincontent() {
         <div className="rightcurrent">
           <h5>{mainheader[0]?.album?.album_type}</h5>
           <h1>{mainheader[0]?.album?.name}</h1>
-          <h5><span onClick={()=>window.location.replace(mainheader[0]?.artists[0]?.external_urls.spotify)}>{mainheader[0]?.artists[0]?.name}</span> | 2017 | 20 songs, 1 hr 38 min</h5>
+          <h5>
+            <span
+              onClick={() =>
+                window.location.replace(
+                  mainheader[0]?.artists[0]?.external_urls.spotify
+                )
+              }
+            >
+              {mainheader[0]?.artists[0]?.name}
+            </span>{" "}
+            | 2017 | 20 songs, 1 hr 38 min
+          </h5>
         </div>
       </div>
       <div className="mainbottom">
@@ -114,10 +129,10 @@ const Mainspot = styled.div`
     color: #fff;
     /* align-items:center; */
   }
-  .rightcurrent span{
-    cursor:pointer;
+  .rightcurrent span {
+    cursor: pointer;
     color: #159895;
-    font-weight:bold;
+    font-weight: bold;
   }
   .rightcurrent h1 {
     font-size: 3rem;

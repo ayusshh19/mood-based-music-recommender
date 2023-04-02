@@ -3,7 +3,11 @@ import styled from "styled-components";
 import axios from "axios";
 import { useStateProvider } from "../utils/StateProvider";
 import { reducerCases } from "../utils/Constants";
+import { UserContext } from "../App";
+import { useContext } from "react";
 export default function CurrentTrack() {
+  const { trackdata, settrackdata, playlistdata, setplaylistdata } =
+  useContext(UserContext);
   const [{ token, currentPlaying }, dispatch] = useStateProvider();
   useEffect(() => {
     const getCurrentTrack = async () => {
@@ -32,15 +36,15 @@ export default function CurrentTrack() {
   }, [token, dispatch]);
   return (
     <Container>
-      {currentPlaying && (
+      {playlistdata && (
         <div className="track">
           <div className="track__image">
-            <img src={currentPlaying.image} alt="currentPlaying" />
+            <img src={playlistdata[0]?.album?.images[0].url} alt="currentPlaying" />
           </div>
           <div className="track__info">
-            <h4 className="track__info__track__name">{currentPlaying.name}</h4>
+            <h4 className="track__info__track__name">{playlistdata[0]?.album?.name}</h4>
             <h6 className="track__info__track__artists">
-              {currentPlaying.artists.join(", ")}
+            {playlistdata[0]?.artists[0]?.name}
             </h6>
           </div>
         </div>
@@ -54,6 +58,10 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
+    img{
+      width:4rem;
+      height:4rem;
+    }
     &__image {
     }
     &__info {

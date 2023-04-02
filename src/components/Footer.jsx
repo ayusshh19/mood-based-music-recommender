@@ -4,11 +4,13 @@ import CurrentTrack from "./CurrentTrack";
 
 import PlayerControls from "./PlayerControls";
 import Volume from "./Volume";
+import Moodcontrol from "./Moodcontrol";
 export default function Footer() {
   return (
     <Container>
       <CurrentTrack />
-      <PlayerControls />
+      <Moodcontrol />
+      {/* <PlayerControls /> */}
       <Volume />
     </Container>
   );
