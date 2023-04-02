@@ -14,11 +14,9 @@ import { UserContext } from "../App";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 export default function Moodcontrol() {
-  const [playerState, setplayerState] = useState("play");
   const [mainset, setmainset] = useState(false);
   const { trackdata, settrackdata, playlistdata, setplaylistdata } =
     useContext(UserContext);
-  const [songData, setSongData] = useState(null);
   const [audioElement, setAudioElement] = useState(null);
 
   useEffect(() => {
@@ -30,7 +28,6 @@ export default function Moodcontrol() {
   }, [ audioElement, playlistdata]);
   const changeState = async () => {
     setmainset(!mainset);
-    setplayerState(mainset ? "play" : "pause");
   
   };
   function handlePlay() {

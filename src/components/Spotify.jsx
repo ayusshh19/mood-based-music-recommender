@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Sidebar from "./Sidebar";
 import styled from "styled-components";
 import Footer from "./Footer";
@@ -8,7 +8,7 @@ import { useStateProvider } from "../utils/StateProvider";
 import Body from "./Body";
 import { reducerCases } from "../utils/Constants";
 import Maincontent from "./Maincontent";
-
+import { UserContext } from "../App";
 export default function Spotify() {
   const [{ token }, dispatch] = useStateProvider();
   const [navBackground, setNavBackground] = useState(false);
@@ -39,6 +39,8 @@ export default function Spotify() {
     };
     getUserInfo();
   }, [dispatch, token]);
+  const { trackdata, settrackdata, playlistdata, setplaylistdata } =
+  useContext(UserContext);
   useEffect(() => {
     const getPlaybackState = async () => {
       const { data } = await axios.get("https://api.spotify.com/v1/me/player", {
@@ -61,8 +63,9 @@ export default function Spotify() {
         <div className="body" ref={bodyRef} onScroll={bodyScrolled}>
           <Navbar navBackground={navBackground} />
           <div className="body__contents">
-            <Maincontent />
-            {/* <Body headerBackground={headerBackground} /> */}
+            {
+              trackdata?<Maincontent />:<Body headerBackground={headerBackground} />
+            }
           </div>
         </div>
       </div>

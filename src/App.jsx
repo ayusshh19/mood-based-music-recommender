@@ -7,7 +7,7 @@ import { useStateProvider } from "./utils/StateProvider";
 export const UserContext = createContext();
 export default function App() {
   const [{ token }, dispatch] = useStateProvider();
-  const [trackdata, settrackdata] = useState();
+  const [trackdata, settrackdata] = useState(true);
   const [playlistdata, setplaylistdata] = useState();
   useEffect(() => {
     const hash = window.location.hash;

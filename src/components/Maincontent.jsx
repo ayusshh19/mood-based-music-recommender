@@ -16,6 +16,7 @@ import "swiper/css/scrollbar";
 import "swiper/css";
 import Maincard from "./Maincard";
 import { UserContext } from "../App";
+import Loading from "./Loading";
 export default function Maincontent() {
   const { trackdata, settrackdata, playlistdata, setplaylistdata } =
     useContext(UserContext);
@@ -29,7 +30,7 @@ export default function Maincontent() {
     });
     console.log(filterdata);
     setmainheader(filterdata);
-    setplaylistdata(filterdata)
+    setplaylistdata(filterdata);
   }, [playid]);
   useEffect(() => {
     axios
@@ -44,27 +45,34 @@ export default function Maincontent() {
   }, []);
   return (
     <Mainspot>
-      <div className="maintop">
-        <div className="leftcurrent">
-          <img src={mainheader[0]?.album?.images[0].url} alt="" srcset="" />
+      {getalldetails.length > 0 ? (
+        <div className="maintop">
+          {
+            mainheader.length>0?(<>
+            <div className="leftcurrent">
+            <img src={mainheader[0]?.album?.images[0].url} alt="" srcset="" />
+          </div>
+          <div className="rightcurrent">
+            <h5>{mainheader[0]?.album?.album_type}</h5>
+            <h1>{mainheader[0]?.album?.name}</h1>
+            <h5>
+              <span
+                onClick={() =>
+                  window.location.replace(
+                    mainheader[0]?.artists[0]?.external_urls.spotify
+                  )
+                }
+              >
+                {mainheader[0]?.artists[0]?.name}
+              </span>{" "}
+              | 2017 | 20 songs, 1 hr 38 min
+            </h5>
+          </div></>):<h2>Select music to play!</h2>
+          }
         </div>
-        <div className="rightcurrent">
-          <h5>{mainheader[0]?.album?.album_type}</h5>
-          <h1>{mainheader[0]?.album?.name}</h1>
-          <h5>
-            <span
-              onClick={() =>
-                window.location.replace(
-                  mainheader[0]?.artists[0]?.external_urls.spotify
-                )
-              }
-            >
-              {mainheader[0]?.artists[0]?.name}
-            </span>{" "}
-            | 2017 | 20 songs, 1 hr 38 min
-          </h5>
-        </div>
-      </div>
+      ) : (
+        ""
+      )}
       <div className="mainbottom">
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -79,15 +87,17 @@ export default function Maincontent() {
           allowSlidePrev={true}
           preventClicksPropagation={false}
         >
-          {getalldetails.length > 0
-            ? getalldetails.map((data) => {
-                return (
-                  <SwiperSlide>
-                    <Maincard data={data} setid={setplayid} />
-                  </SwiperSlide>
-                );
-              })
-            : "loading"}
+          {getalldetails.length > 0 ? (
+            getalldetails.map((data) => {
+              return (
+                <SwiperSlide>
+                  <Maincard data={data} setid={setplayid} />
+                </SwiperSlide>
+              );
+            })
+          ) : (
+            <Loading />
+          )}
         </Swiper>
       </div>
     </Mainspot>
@@ -115,12 +125,17 @@ const Mainspot = styled.div`
     width: 100%;
     height: 55%;
     display: flex;
+
   }
   .maintop .leftcurrent {
     width: 20%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
+  }
+  .maintop h2{
+    font-size:3rem;
+    color:#fff
   }
   .rightcurrent {
     display: flex;

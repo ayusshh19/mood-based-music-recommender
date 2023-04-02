@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { MdHomeFilled, MdSearch } from "react-icons/md";
 import { IoLibrary } from "react-icons/io5";
 import Playlists from "./Playlists";
 import logo from "../logo.png";
+import { UserContext } from "../App";
 export default function Sidebar() {
+  const { trackdata, settrackdata, playlistdata, setplaylistdata } =
+  useContext(UserContext);
   return (
     <Container>
       <div className="top__links">
@@ -22,9 +25,9 @@ export default function Sidebar() {
             <MdSearch />
             <span>Search</span>
           </li>
-          <li>
+          <li onClick={()=>settrackdata(!trackdata)}>
             <IoLibrary />
-            <span>Your Library</span>
+            <span>{trackdata?'Mood playlist':'Your Library'}</span>
           </li>
         </ul>
       </div>

@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import CurrentTrack from "./CurrentTrack";
 
 import PlayerControls from "./PlayerControls";
 import Volume from "./Volume";
 import Moodcontrol from "./Moodcontrol";
+import { UserContext } from "../App";
 export default function Footer() {
+  const { trackdata, settrackdata, playlistdata, setplaylistdata } =
+    useContext(UserContext);
   return (
     <Container>
       <CurrentTrack />
-      <Moodcontrol />
-      {/* <PlayerControls /> */}
+      {trackdata ? <Moodcontrol /> : <PlayerControls />}
+
       <Volume />
     </Container>
   );
